@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Eye Can See Optical - Choose Frames</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/icon logo.png') }}">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sb-admin-2.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/choose_frame.css') }}">
+</head>
+
+<body id="page-top">
+<div id="wrapper">
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div class="header">
+              <div class="header-content">
+                <img src="{{ url_for('static', filename='img/icon logo.png') }}" alt="Logo">
+                <h3><strong>Eye Can See Optical Frame Recommendation</strong></h3>
+              </div>
+
+              <!-- 🔹 User Info -->
+              <div class="user-info d-flex align-items-center ms-auto">
+                <div class="nav-item dropdown no-arrow">
+                  <a class="nav-link dropdown-toggle d-flex align-items-center text-white" href="#" id="userDropdown"
+                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="mr-2 d-none d-sm-inline text-white small"></span>
+                    <img class="img-profile rounded-circle"
+                         src="{{ url_for('static', filename='img/undraw_profile.svg') }}"
+                         alt="Profile" style="width: 40px; height: 40px;">
+                  </a>
+
+                  <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                       aria-labelledby="userDropdown">
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                      <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                      Logout
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="container-fluid">
+                <!-- PAGE 1 -->
+                <div id="page-1" class="page active mb-3">
+                    <div class="row page1-row">
+                        <div class="col-lg-3 page1-left">
+                            <div class="card shadow mb-3 p-4 instructions-card">
+                                <h4 class="mt-2 mb-4"><i class="fas fa-glasses"></i> <strong>Instructions</strong></h4>
+                                <p class="mb-3 text-muted mt-2" style="font-size: 17px;">
+                                    <strong>Follow these steps to capture your best suited frame:</strong>
+                                </p>
+                                <div class="timeline mx-auto" style="max-width: 450px;">
+                                    <div class="timeline-step mb-4 d-flex align-items-start">
+                                        <div class="timeline-dot bg-primary text-white font-weight-bold mr-3">1</div>
+                                        <p>Choose <strong>any eyeglass frames</strong> filtered by the system based on your condition and lens type.</p>
+                                    </div>
+                                    <div class="timeline-step mb-4 d-flex align-items-start">
+                                        <div class="timeline-dot bg-success text-white font-weight-bold mr-3">2</div>
+                                        <p>Wear a <strong>different eyeglass frame</strong> per photo.</p>
+                                    </div>
+                                    <div class="timeline-step mb-4 d-flex align-items-start">
+                                        <div class="timeline-dot bg-info text-white font-weight-bold mr-3">3</div>
+                                        <p>Position your <strong>face in front of the camera</strong>.</p>
+                                    </div>
+                                    <div class="timeline-step mb-4 d-flex align-items-start">
+                                        <div class="timeline-dot bg-warning text-white font-weight-bold mr-3">4</div>
+                                        <p>Click the <strong>"Start Capture"</strong> button.</p>
+                                    </div>
+                                    <div class="timeline-step mb-4 d-flex align-items-start">
+                                        <div class="timeline-dot bg-danger text-white font-weight-bold mr-3">5</div>
+                                        <p>Repeat the steps for the other frames. You can click the <strong>"Stop Capture"</strong> button if you are now satisfied with the frames you wore and tried.</p>
+                                    </div>
+                                </div>
+                                <p class="mt-4 text-muted">
+                                    <i class="fas fa-info-circle"></i>
+                                    <small>The recommendation is based on the filtered frames that match <strong>the patient’s lens type and condition</strong>, how well each frame <strong>physically fits your face
+                                        using the three primary parametric measures (Lens Width, Bridge Width, and Temple Length)</strong>, and the <strong>results of the face shape analysis</strong>.</small>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-9 page1-right">
+                            <div class="card shadow mb-3 p-4 select-patient-card">
+
+                                <div class="d-flex flex-column justify-content-between align-items-center flex-wrap select-row w-100">
+                                    <!-- Patient selection -->
+                                    <div class="form-group mt-3 mb-4" style="width: 100%; max-width: 500px;">
+                                        <label for="patient-select" class="font-weight-bold mb-2 mr-3" style="font-size: 18px;">
+                                            <i class="fas fa-user mr-2"></i>Select Patient
+                                        </label>
+
+
+                                        <select id="patient-select" class="form-control1 w-100" style="font-size: 18px;">
+                                            <option value="">-- Choose Patient --</option>
+                                            {% for patient in patients %}
+                                                <option value="{{ patient.patient_id }}">{{ patient.full_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <!-- Prescription Feedback -->
+                                    <div id="patient-status" class="mt-4 text-center badge badge-secondary" style="min-width: 250px; font-size: 16px;">
+                                        No patient selected.
+                                    </div>
+                                </div>
+
+
+                                <div id="frame-shape-filter" class="text-center mb-3" style="display:none;">
+                                  <button class="btn btn-outline-primary m-1 shape-btn" data-shape="Round">Round</button>
+                                  <button class="btn btn-outline-primary m-1 shape-btn" data-shape="Circle">Circle</button>
+                                  <button class="btn btn-outline-primary m-1 shape-btn" data-shape="Oval">Oval</button>
+                                  <button class="btn btn-outline-primary m-1 shape-btn" data-shape="Rectangle">Rectangle</button>
+                                  <button class="btn btn-outline-primary m-1 shape-btn" data-shape="Cat eye">Cat eye</button>
+                                  <button class="btn btn-outline-primary m-1 shape-btn" data-shape="Geometric">Geometric</button>
+                                </div>
+
+
+                                <!-- Recommended Frames Container -->
+                                <div id="recommended-frames-container" class="mt-4 d-flex flex-wrap justify-content-center recommended-frames"></div>
+
+                                <!-- Bottom section: Next button hidden initially -->
+                                <div id="next-button-container" class="text-center mt-3" style="display:none;">
+                                  <button id="btn-next" class="btn btn-primary">
+                                    <i class="fas fa-arrow-right mr-2"></i> Next
+                                  </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAGE 2 -->
+                <div id="page-2" class="page">
+                    <!-- Back Button -->
+                    <button id="btn-back" class="back-to-prev rounded">
+                      <i class="fas fa-angle-left mr-1"></i> Back
+                    </button>
+
+                    <div class="row">
+                        <div class="col-lg-3 page1-left">
+                            <div class="card shadow mb-3 p-4 instructions-card">
+                                <h4 class=" mt-2 mb-4"><i class="fas fa-glasses"></i> <strong>Instructions</strong></h4>
+                                <p class="mb-3 text-muted mt-2" style="font-size: 17px;">
+                                    <strong>Follow these steps to capture your best suited frame:</strong>
+                                </p>
+                                <div class="timeline mx-auto" style="max-width: 450px;">
+                                    <div class="timeline-step mb-4 d-flex align-items-start">
+                                        <div class="timeline-dot bg-primary text-white font-weight-bold mr-3">1</div>
+                                        <p>Choose <strong>any eyeglass frames</strong> filtered by the system based on your condition and lens type.</p>
+                                    </div>
+                                    <div class="timeline-step mb-4 d-flex align-items-start">
+                                        <div class="timeline-dot bg-success text-white font-weight-bold mr-3">2</div>
+                                        <p>Wear a <strong>different eyeglass frame</strong> per photo.</p>
+                                    </div>
+                                    <div class="timeline-step mb-4 d-flex align-items-start">
+                                        <div class="timeline-dot bg-info text-white font-weight-bold mr-3">3</div>
+                                        <p>Position your <strong>face in front of the camera</strong>.</p>
+                                    </div>
+                                    <div class="timeline-step mb-4 d-flex align-items-start">
+                                        <div class="timeline-dot bg-warning text-white font-weight-bold mr-3">4</div>
+                                        <p>Click the <strong>"Start Capture"</strong> button.</p>
+                                    </div>
+                                    <div class="timeline-step mb-4 d-flex align-items-start">
+                                        <div class="timeline-dot bg-danger text-white font-weight-bold mr-3">5</div>
+                                        <p>Repeat the steps for the other frames. You can click the <strong>"Stop Capture"</strong> button if you are now satisfied with the frames you wore and tried.</p>
+                                    </div>
+                                </div>
+                                <p class="mt-4 text-muted">
+                                    <i class="fas fa-info-circle"></i>
+                                    <small>The recommendation is based on the filtered frames that match <strong>the patient’s lens type and condition</strong>, how well each frame <strong>physically fits your face
+                                        using the three primary parametric measures (Lens Width, Bridge Width, and Temple Length)</strong>, and the <strong>results of the face shape analysis</strong>.</small>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-9 page-2-camera-card">
+                            <div class="card shadow mb-3 p-4 text-center">
+                                <img id="live-camera" data-feed-url="{{ url_for('video_feed') }}" class="border rounded ml-4 mt-3" alt="Live camera" style="display:none;">
+
+                              <div class="text-center">
+                                <button id="start-capture" class="btn btn-primary mt-2" type="button">
+                                    <i class="fas fa-camera mr-2"></i> Start Capture
+                                </button>
+                            </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-lg-12">
+                            <div class="card shadow d-flex p-4">
+                                <h4 class="mb-3"><i class="fas fa-images"></i> <strong>Captured Images</strong></h4>
+                                <div id="image-container" class="image-container d-flex flex-wrap justify-content-center">
+                                    {% for img in image_paths %}
+                                        <img src="{{ img }}"
+                                             class="selectable-image img-fluid rounded shadow-sm m-2"
+                                             data-filename="{{ img }}"
+                                             width="450" height="150"
+                                             onclick="selectImage(this)">
+                                    {% endfor %}
+                                </div>
+
+                                <div class="d-flex justify-content-center mt-3">
+                                    <form method="POST" action="/analyze">
+                                        <button id="analyze-button" class="btn btn-success btn-block" type="submit">
+                                            <i class="fas fa-check"></i> Analyze Frames
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fullscreen Camera Container for Mobile/Tablet -->
+                <div id="mobile-camera-container" class="mobile-camera-container d-none">
+                    <video id="browser-camera" autoplay playsinline></video>
+                    <canvas id="camera-overlay-canvas"></canvas>
+
+                    <!-- Instructions toggle button -->
+                    <button id="instructions-toggle" class="instructions-toggle-btn">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="toggle-label font-weight-bold" style="color: #9C2627;">Instructions</span>
+                    </button>
+
+                    <!-- Instructions overlay -->
+                    <div id="instructions-overlay" class="instructions-overlay">
+                        <h4 class="mt-2 mb-4">
+                          <i class="fas fa-glasses"></i> <strong>Instructions</strong>
+                        </h4>
+                        <p class="mb-3 text-muted mt-2" style="font-size: 17px;">
+                          <strong>Follow these steps to capture your best suited frame:</strong>
+                        </p>
+                        <div class="timeline mx-auto" style="max-width: 450px;">
+                          <div class="timeline-step mb-4 d-flex align-items-start">
+                            <div class="timeline-dot bg-primary text-white font-weight-bold mr-3">1</div>
+                            <p>Choose <strong>any eyeglass frames</strong> filtered by the system based on your condition and lens type.</p>
+                          </div>
+                          <div class="timeline-step mb-4 d-flex align-items-start">
+                            <div class="timeline-dot bg-success text-white font-weight-bold mr-3">2</div>
+                            <p>Wear a <strong>different eyeglass frame</strong> per photo.</p>
+                          </div>
+                          <div class="timeline-step mb-4 d-flex align-items-start">
+                            <div class="timeline-dot bg-info text-white font-weight-bold mr-3">3</div>
+                            <p>Position your <strong>face in front of the camera</strong>.</p>
+                          </div>
+                          <div class="timeline-step mb-4 d-flex align-items-start">
+                            <div class="timeline-dot bg-warning text-white font-weight-bold mr-3">4</div>
+                            <p>Click the <strong>"Start Capture"</strong> button.</p>
+                          </div>
+                          <div class="timeline-step mb-4 d-flex align-items-start">
+                            <div class="timeline-dot bg-danger text-white font-weight-bold mr-3">5</div>
+                            <p>Repeat the steps for the other frames. You can click the <strong>"Stop Capture"</strong> button if you are now satisfied with the frames you wore and tried.</p>
+                          </div>
+                        </div>
+                        <p class="mt-4 text-muted">
+                          <i class="fas fa-info-circle"></i>
+                          <small>The recommendation is based on the filtered frames that match <strong>the patient’s lens type and condition</strong>, how well each frame <strong>physically fits your face using the three primary parametric measures (Lens Width, Bridge Width, and Temple Length)</strong>, and the <strong>results of the face shape analysis</strong>.</small>
+                        </p>
+                    </div>
+
+                      <!-- Arrow toggle button -->
+                    <button id="overlay-toggle" class="overlay-toggle-btn">
+                        <i class="fas fa-chevron-up"></i>
+                        <span class="toggle-label font-weight-bold" style="color: #9C2627;">Close</span>
+                    </button>
+
+                    <div id="recommended-overlay" class="recommended-overlay">
+                      <h6 class="mt-2 ml-2" style="font-size: 1.3rem; font-weight: 600;">Recommended Frames</h6>
+                      <!-- Buttons row -->
+                      <div id="shape-buttons-row" class="shape-buttons-row"></div>
+
+                      <!-- Frame cards row -->
+                      <div id="overlay-frame-cards" class="overlay-frame-cards"></div>
+                    </div>
+
+                    <!-- Fullscreen Overlay Camera Container (used by desktop and mobile flows) -->
+                    <div id="cameraOverlay" class="camera-overlay d-none">
+                    </div>
+
+                    <div id="mobile-thumb-container">
+                        <h6 class="font-weight-bold"><i class="fas fa-images mr-1"></i>Captured Images</h6>
+                        <span>(will appear here)</span>
+                      <div id="thumb-scroll-wrapper">
+                        <!-- thumbnails go here -->
+                      </div>
+                    </div>
+
+                  <!-- Button row -->
+                  <div id="mobile-button-row" class="btn-group mt-2">
+                    <button id="mobile-start-capture" class="btn btn-primary" type="button"><i class="fas fa-camera mr-2"></i>Start Capture</button>
+                    <!-- Stop button will be injected here -->
+                  </div>
+                </div>
+            </div>
+
+               <!-- 🔹 Flash Message Modal -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    <script>
+                      document.addEventListener("DOMContentLoaded", function () {
+                        const modal = new bootstrap.Modal(document.getElementById("flashModal"));
+                        const header = document.querySelector("#flashModal .modal-header");
+                        const title = document.querySelector("#flashModalLabel");
+                        const body = document.getElementById("flashModalBody");
+
+                        {% for category, message in messages %}
+                          const category = "{{ category }}";
+                          const msg = "{{ message }}";
+
+                          // Icon + title per category
+                          const map = {
+                            success: { icon: "fas fa-check-circle text-success", title: "Success" },
+                            danger: { icon: "fas fa-exclamation-circle text-danger", title: "Error" },
+                            warning: { icon: "fas fa-exclamation-triangle text-warning", title: "Warning" },
+                            info: { icon: "fas fa-info-circle text-primary", title: "Notice" }
+                          };
+
+                          const { icon, title: titleText } = map[category] || map.info;
+
+                          // Set modal content
+                          header.style.backgroundColor = "#f8f9fc";
+                          header.style.color = "#212529";
+
+                          title.innerHTML = `<i class="${icon} mr-2"></i><span class="font-weight-bold">${titleText}</span>`;
+                          body.innerHTML = `<p class="mb-5">${msg}</p>`;
+
+                          // Show modal
+                          modal.show();
+
+                          // Auto-hide after 3s
+                          setTimeout(() => modal.hide(), 3000);
+                        {% endfor %}
+                      });
+                    </script>
+                  {% endif %}
+                {% endwith %}
+
+                <!-- 🔹 Responsive Flash Modal -->
+                <div class="modal fade" id="flashModal" tabindex="-1" aria-labelledby="flashModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0 shadow-lg rounded-3">
+
+                      <!-- Header -->
+                      <div class="modal-header justify-content-center text-center py-3" style="background-color: #f8f9fc;">
+                        <h5 class="modal-title fw-bold d-flex align-items-center justify-content-center gap-2" id="flashModalLabel">
+                          <i class="fas fa-info-circle"></i>
+                          <span>Notice</span>
+                        </h5>
+                      </div>
+
+                      <!-- Body -->
+                      <div class="modal-body text-center px-4 py-3" id="flashModalBody">
+                        <p class="mb-0 fs-6">Loading...</p>
+                      </div>
+
+                      <!-- Footer (✅ added so JS can inject buttons) -->
+                      <div class="modal-footer justify-content-center" id="flashModalFooter">
+                        <!-- Buttons will be injected dynamically by JS -->
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+        </div>
+        <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Eye Can See Optical 2025</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+    </div>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          </div>
+          <div class="modal-body">
+            Select "Logout" below if you are ready to end your current session.
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="{{ url_for('login') }}">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Select2 CSS & JS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<!-- Bootstrap core JavaScript-->
+<script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="static/js/sb-admin-2.js"></script>
+<script src="https://docs.opencv.org/4.x/opencv.js"></script>
+<script src="{{ url_for('static', filename='js/choose_frame.js') }}"></script>
+
+</body>
+</html>

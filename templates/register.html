@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Eye Can See Optical - Register</title>
+
+    <!-- Custom fonts for this templates-->
+    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='img/icon logo.png') }}" type="image/png">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this templates-->
+    <link href="{{ url_for('static', filename='css/sb-admin-2.css') }}" rel="stylesheet">
+
+    <style>
+        #passwordRules li {
+          margin-bottom: 3px;
+          transition: color 0.2s ease;
+        }
+          /* === LOGO SECTION === */
+        .logo-section {
+          text-align: center;
+        }
+
+        .responsive-logo {
+          max-width: 300px;
+          height: auto;
+          transition: transform 0.3s ease;
+        }
+
+        .logo-text {
+          font-size: 1.2rem;
+          margin-top: 10px;
+        }
+
+        /* Hover effect (optional aesthetic) */
+        .responsive-logo:hover {
+          transform: scale(1.05);
+        }
+
+        /* === RESPONSIVE BREAKPOINTS === */
+
+        /* Medium screens (≤ 992px) */
+        @media (max-width: 992px) {
+          .responsive-logo {
+            max-width: 250px;
+          }
+          .logo-text {
+            font-size: 1.1rem;
+          }
+        }
+
+        /* Tablets (≤ 768px) */
+        @media (max-width: 768px) {
+          .responsive-logo {
+            max-width: 230px;
+          }
+          .logo-text {
+            font-size: 0.95rem;
+          }
+        }
+
+        /* Small screens (≤ 576px) */
+        @media (max-width: 576px) {
+          .logo-section {
+            margin-top: 3rem;
+          }
+
+          .responsive-logo {
+            max-width: 210px;
+          }
+          .logo-text {
+            font-size: 0.9rem;
+          }
+        }
+    </style>
+
+</head>
+
+<body class="bg-gradient-primary1">
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-5 d-flex flex-column justify-content-center align-items-center text-center logo-section mb-lg-0">
+                              <img src="static/img/logo.png" alt="Register Image" class="img-fluid responsive-logo">
+                              <h6 class="logo-text mt-3"><strong>Eye Can See Optical</strong></h6>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4"><strong>Create an Account</strong></h1>
+                                    </div>
+
+                                    <form id="registerForm" method="POST" action="{{ url_for('register') }}" class="user">
+                                      <!-- First & Last Name -->
+                                      <div class="form-group mb-3">
+                                        <label for="user_fname">First Name</label>
+                                        <input type="text" name="user_fname" id="user_fname" class="form-control1" placeholder="Enter your first name" required>
+                                      </div>
+
+                                      <div class="form-group mb-3">
+                                        <label for="user_lname">Last Name</label>
+                                        <input type="text" name="user_lname" id="user_lname" class="form-control1" placeholder="Enter your last name" required>
+                                      </div>
+
+                                      <!-- Username -->
+                                      <div class="form-group mb-3 position-relative">
+                                        <label for="user_username">Username</label>
+                                        <input type="text" name="user_username" id="user_username" class="form-control1" placeholder="Enter your username" required>
+                                        <small id="usernameFeedback" class="form-text mt-1"></small>
+                                      </div>
+
+                                      <!-- Email -->
+                                      <div class="form-group mb-3 position-relative">
+                                        <label for="email">Email</label>
+                                        <input type="email" name="email" id="email" class="form-control1" placeholder="Enter your email" required>
+                                        <small id="emailFeedback" class="form-text mt-1"></small>
+                                      </div>
+
+                                      <!-- Password -->
+                                      <div class="form-group mb-2">
+                                        <label for="password">Password</label>
+                                        <input type="password" name="password" id="password" class="form-control1" placeholder="Enter your password" required>
+
+                                        <div id="passwordMeter" class="mt-2" style="height: 8px; width: 100%; background-color: #eee; border-radius: 5px; overflow: hidden;">
+                                          <div id="passwordStrengthBar" style="height: 100%; width: 0%; background: #ccc; transition: width 0.3s ease, background 0.3s ease;"></div>
+                                        </div>
+                                        <div id="passwordStrengthLabel" class="small mt-1 text-muted">Enter a password</div>
+
+                                        <ul id="passwordRules" class="small mt-2" style="list-style: none; padding-left: 0;">
+                                          <li id="len" class="text-danger">At least 8 characters</li>
+                                          <li id="upper" class="text-danger">At least one uppercase letter</li>
+                                          <li id="lower" class="text-danger">At least one lowercase letter</li>
+                                          <li id="number" class="text-danger">At least one number</li>
+                                          <li id="special" class="text-danger">At least one special character (@$!%*?&)</li>
+                                        </ul>
+                                      </div>
+
+                                      <!-- Role -->
+                                      <div class="form-group mb-3">
+                                        <label for="role">Role</label>
+                                        <select name="role" id="role" class="form-control1" required>
+                                          <option value="">-- Select Role --</option>
+                                          <option value="user">User</option>
+                                          <option value="admin">Admin</option>
+                                        </select>
+                                      </div>
+
+                                      <button type="submit" class="btn btn-primary btn-user btn-block mt-2">Register</button>
+                                    </form>
+
+                                    <hr>
+                                    <!-- Guest Access Button -->
+                                    <div class="text-center">
+                                        <a href="{{ url_for('patient_appointment') }}" class="btn btn-primary btn-user btn-block" style="font-size: 0.8rem; border-radius: 10rem; padding: 0.75rem 1rem;">
+                                            Continue as Patient (without log-in)
+                                        </a>
+                                    </div>
+                                    <div class="text-center">
+                                        <a class="small" href="{{ url_for('login') }}" style=" color: #9C2627;">Already have an account? Login!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const password = document.getElementById("password");
+  const bar = document.getElementById("passwordStrengthBar");
+  const label = document.getElementById("passwordStrengthLabel");
+
+  // 🧠 Password Strength Logic
+  password.addEventListener("input", function () {
+    const val = password.value;
+    let strength = 0;
+
+    const rules = {
+      len: val.length >= 8,
+      upper: /[A-Z]/.test(val),
+      lower: /[a-z]/.test(val),
+      number: /[0-9]/.test(val),
+      special: /[@$!%*?&]/.test(val)
+    };
+
+    for (const [id, valid] of Object.entries(rules)) {
+      document.getElementById(id).className = valid ? "text-success" : "text-danger";
+      if (valid) strength++;
+    }
+
+    const percent = (strength / 5) * 100;
+    bar.style.width = percent + "%";
+
+    if (percent === 0) {
+      bar.style.background = "#e0e0e0";
+      label.textContent = "Enter a password";
+      label.className = "small mt-1 text-muted";
+    } else if (percent <= 40) {
+      bar.style.background = "linear-gradient(90deg, #ff4b5c, #ff5f6d)";
+      label.textContent = "Weak";
+      label.className = "small mt-1 text-danger";
+    } else if (percent <= 80) {
+      bar.style.background = "linear-gradient(90deg, #ffcd3c, #ffd36b)";
+      label.textContent = "Medium";
+      label.className = "small mt-1 text-warning";
+    } else {
+      bar.style.background = "linear-gradient(90deg, #4cd137, #00b894)";
+      label.textContent = "Strong";
+      label.className = "small mt-1 text-success";
+    }
+  });
+
+  // 📨 Username Availability
+  const usernameInput = document.getElementById("user_username");
+  const usernameFeedback = document.getElementById("usernameFeedback");
+
+  usernameInput.addEventListener("input", function () {
+    const username = usernameInput.value.trim();
+    if (username.length < 3) {
+      usernameFeedback.textContent = "Username too short.";
+      usernameFeedback.className = "small text-danger";
+      return;
+    }
+
+    fetch(`/check_username?username=${encodeURIComponent(username)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.exists) {
+          usernameFeedback.textContent = "❌ Username already taken.";
+          usernameFeedback.className = "small text-danger";
+        } else {
+          usernameFeedback.textContent = "✅ Username available.";
+          usernameFeedback.className = "small text-success";
+        }
+      });
+  });
+
+  // 📧 Email Availability
+  const emailInput = document.getElementById("email");
+  const emailFeedback = document.getElementById("emailFeedback");
+
+  emailInput.addEventListener("input", function () {
+    const email = emailInput.value.trim();
+    if (!email.includes("@")) {
+      emailFeedback.textContent = "";
+      return;
+    }
+
+    fetch(`/check_email?email=${encodeURIComponent(email)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.exists) {
+          emailFeedback.textContent = "❌ Email already registered.";
+          emailFeedback.className = "small text-danger";
+        } else {
+          emailFeedback.textContent = "✅ Email available.";
+          emailFeedback.className = "small text-success";
+        }
+      });
+  });
+});
+</script>
+
+
+</body>
+
+</html>
