@@ -1,0 +1,1149 @@
+.captured-images-container { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.selectable-image { border: 3px solid transparent; border-radius: 6px; cursor: pointer; transition: 0.3s; margin: 8px 0; }
+.selectable-image.selected { border-color: #e74a3b; }
+.card { margin-top: 20px; border: none; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+.profile-img { border-radius: 50%; width: 100px; height: 100px; }
+.user-info { text-align: center; }
+.info-section { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; margin-top: 20px; padding: 20px; }
+.info-column { flex: 1; padding: 0 10px; }
+.divider { width: 1px; background-color: #e0e0e0; height: 100%; margin: 0 20px; }
+.timeline { position: relative; padding-left: 20px; }
+.timeline-item { display: flex; align-items: flex-start; margin-bottom: 20px; }
+.timeline-time { width: 100px; text-align: right; font-size: 0.85rem; color: #6c757d; padding-right: 10px; flex-shrink: 0; }
+.timeline-dot { width: 34px; height: 34px; border-radius: 50%; background-color: #ccc; flex-shrink: 0; margin-top: 4px; padding: 5px; padding-left: 13px; position: relative; z-index: 2; }
+.timeline-content { padding-left: 15px; flex-grow: 1; }
+.card .row { border-bottom: 1px solid #e0e0e0; padding: 8px 0; }
+/* 🔹 Header layout with user info */
+.header {
+   display: flex;
+   justify-content: space-between; /* logo left, user info right */
+   align-items: center;
+   background-color: #8b1e24;
+   color: white;
+   padding: 15px 25px;
+   margin: 20px;
+   border-radius: 13px;
+   flex-wrap: wrap;
+}
+
+.header-content {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   flex-wrap: nowrap;
+}
+
+.header-content img {
+   filter: brightness(0) invert(1);
+   height: 80px;
+   width: auto;
+   max-width: 100%;
+}
+
+.header-content h3 {
+   font-size: 1.5rem;
+   margin: 0;
+   color: #fff;
+   font-weight: bold;
+   line-height: 1.3;
+}
+
+/* 🔹 User info (dropdown and avatar) */
+.user-info {
+   display: flex;
+   align-items: center;
+}
+
+.user-info .dropdown-toggle {
+   color: #fff;
+   font-weight: 600;
+}
+
+.user-info .img-profile {
+   border: 2px solid #fff;
+   margin-left: 8px;
+   transition: transform 0.2s ease;
+}
+
+.user-info .img-profile:hover {
+   transform: scale(1.05);
+}
+
+.page { display: none; }
+.page.active { display: block; }
+.page-1-footer, .page-2-footer { display:flex; justify-content:center; gap:12px; margin-top: 20px;}
+#live-camera { max-width: 100%; height: auto; border-radius: 10px; display: none; }
+
+/* Improved buttons */
+.btn { font-size: 1rem; padding: 10px 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: background-color 0.3s ease; }
+.btn:hover { opacity: 0.9; }
+
+/* Card headers */
+.card-header { background-color: #f8f9fc; font-weight: bold; border-bottom: 1px solid #e0e0e0; padding: 12px 20px; font-size: 1.1rem; }
+
+/* Selected image styling */
+.selectable-image:hover { transform: scale(1.02); box-shadow: 0 0 10px rgba(0,0,0,0.2); }
+.selectable-image.selected { border-color: #e74a3b; box-shadow: 0 0 12px rgba(231, 74, 59, 0.5); }
+
+/* Recommendation cards */
+.recommended-frames .card { transition: transform 0.2s ease; }
+.recommended-frames .card:hover { transform: translateY(-4px); box-shadow: 0 0 12px rgba(0,0,0,0.15); }
+
+/* Footer styling */
+footer { border-top: 1px solid #e0e0e0; padding: 15px 0; background: linear-gradient(to right, #f8f9fc, #ffffff); }
+
+/* Recommended Frames Grid — Fixed height (2 rows only) */
+#recommended-frames-container {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* 4–5 cards per row */
+   gap: 20px;
+
+   max-height: 420px;        /* ⬅️ EXACT height for 2 rows of cards */
+   overflow-y: auto;         /* ⬅️ Scroll ONLY inside this area */
+   padding-right: 10px;
+
+   padding-bottom: 10px;
+}
+
+/* Prevent recommended cards from stretching */
+#recommended-frames-container .card {
+   height: auto !important;
+   display: block !important;
+   flex: none !important;
+}
+
+
+#recommended-frames-container .card:hover {
+   transform: translateY(-4px);
+   box-shadow: 0 0 12px rgba(0,0,0,0.15);
+}
+
+.recommendation-feedback {
+   background-color: #d0e8f2; /* light blue */
+   border-left: 4px solid #1ca3ec; /* accent color */
+   padding: 10px;
+   border-radius: 4px;
+   font-size: 0.95rem;
+   color: #0c3c60;
+}
+
+/* 🔹 Equal height columns only on desktop */
+.page1-row {
+   display: flex;
+   align-items: stretch;
+}
+
+.page1-left,
+.page1-right {
+   display: flex;
+   flex-direction: column;
+}
+
+/* Make cards stretch evenly */
+.page1-left .card,
+.page1-right .card {
+   flex: 1;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+}
+
+* Frame container scrolls instead of forcing card to grow */
+.page1-right .frames-scroll-area {
+   flex: 1;
+   overflow-y: auto;
+   padding-right: 5px;
+   max-height: 600px; /* adjustable */
+}
+
+/* Make instructions auto-stretch fully */
+.page1-left .instructions-card {
+   display: flex;
+   flex-direction: column;
+   flex: 1;
+}
+
+/* Allow timeline/content to stretch */
+.instructions-card .timeline {
+   flex-grow: 1;
+   margin-top: 23px;
+}
+
+/* Main container spacing */
+.select-patient-card {
+   display: flex;
+   flex-direction: column;
+}
+
+/* Row containing patient select + status */
+.select-row {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   flex-wrap: wrap;  /* <-- important */
+   gap: 15px;
+}
+
+/* Adjust select dropdown */
+#patient-select {
+   width: 50% !important;
+   max-width: 50% !important;
+   font-size: 1rem;
+}
+
+/* Frame shape filter on mobile */
+#frame-shape-filter {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   gap: 8px;
+}
+
+#frame-shape-filter button {
+   flex: 1 1 calc(50% - 10px);  /* 2 buttons per row */
+   min-width: 120px;
+}
+
+.camera-modal-content {
+   background: rgba(255, 255, 255, 0.95);
+   backdrop-filter: blur(10px);
+   padding: 0;
+   border-radius: 15px;
+   overflow: hidden;
+   width: 100%;
+   max-width: 420px;
+   margin: auto;
+   box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+/* HEADER */
+.camera-modal-header {
+   background: #f8f9fa;
+   padding: 12px 18px;
+   color: #fff;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.camera-title {
+   font-size: 1.2rem;
+   margin: 0;
+   font-weight: bold;
+}
+
+.close-btn {
+   background: transparent;
+   border: none;
+   font-size: 1.6rem;
+   font-weight: bold;
+   color: black;
+   cursor: pointer;
+   transition: 0.2s;
+}
+
+.close-btn:hover {
+   opacity: 0.7;
+}
+
+/* BODY */
+.camera-modal-body {
+   padding: 15px;
+   text-align: center;
+}
+
+.camera-feed {
+   width: 100%;
+   max-height: 300px;
+   object-fit: contain;
+   border-radius: 10px;
+}
+
+/* FOOTER */
+.camera-modal-footer {
+   padding: 12px;
+   text-align: center;
+   background: #f8f9fc;
+}
+
+.camera-modal-footer .btn {
+   width: 100%;
+   border-radius: 8px;
+}
+
+/* Modal dialog spacing */
+#cameraModal .modal-dialog {
+   max-width: 420px;
+   width: 95%;
+}
+
+/* -----------------------------------------
+    MODAL BUTTON SIZE IMPROVEMENT
+----------------------------------------- */
+.camera-modal-footer .btn {
+    font-size: 0.85rem !important;  /* smaller font */
+    padding: 6px 10px !important;   /* smaller height */
+    border-radius: 6px !important;
+}
+
+/* Smaller icon spacing */
+.camera-modal-footer .btn i {
+    margin-right: 4px !important;
+}
+
+.back-to-prev {
+    position: fixed;
+    right: 1rem;
+    bottom: 4.5rem; /* 🔹 Position above scroll-to-top */
+    width: 4rem;
+    height: 2.75rem;
+    text-align: center;
+    color: #fff;
+    background: rgba(90, 92, 105, 0.5);
+    line-height: 46px;
+    border-radius: 50%;
+    transition: all 0.3s ease-in-out;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* 🔥 Remove border completely */
+    border: none !important;
+    outline: none !important;
+}
+
+.back-to-prev:hover,
+.back-to-prev:focus {
+    background: #5a5c69;
+    color: white;
+}
+
+.page-2-camera-card .card {
+    position: relative !important;
+}
+
+/* Dark semi-transparent background */
+.camera-overlay {
+  position: relative;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  overflow: hidden; /* prevent scrollbars */
+}
+
+#browser-camera {
+  position: relative;   /* anchor overlays */
+  display: block;
+}
+
+.camera-overlay-annotation {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+
+
+/* Checking badge with pulse */
+.checking-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #22c55e; /* green */
+  color: white;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 15px;
+  animation: pulse 1.2s infinite;
+}
+
+/* Pulse animation */
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+#patient-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80px;
+}
+
+/* ================================
+   Modern Patient Status UI (Revised)
+   ================================ */
+
+.modern-status-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* vertically center content */
+  align-items: center;     /* horizontally center content */
+  width: 100%;
+  min-height: 200px;       /* ensures some card height before content */
+  padding: 15px;
+  text-align: center;
+  flex: 1 1 auto;          /* allows expansion inside flex container */
+  transition: all 0.3s ease;
+}
+
+.condition-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #1f2937;
+  letter-spacing: 0.3px;
+  text-align: center;
+  word-break: break-word;
+}
+
+/* Material + Frame badges row */
+.recommend-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+/* Badge Style */
+.badge-material,
+.badge-frame {
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
+  max-width: 100%;            /* prevent overflow */
+  white-space: normal;        /* allow wrapping */
+  word-break: break-word;     /* wrap long text */
+}
+
+.badge-material {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #7dd3fc;
+}
+
+.badge-frame {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fcd34d;
+}
+
+/* Recommendation Reason / Description */
+.recommend-description {
+  margin-top: 12px;
+  background: #f9fafb;
+  padding: 12px 15px;
+  border-radius: 10px;
+  text-align: left;
+  font-size: 0.95rem;
+  line-height: 1.35rem;
+  border-left: 4px solid #6366f1;
+  word-break: break-word;
+  width: 100%;
+  max-width: 100%;
+}
+
+.mobile-camera-container {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#mobile-button-row {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  padding: 0 20px;
+  z-index: 1000;
+}
+
+/* Default: Capture button fills the row when alone */
+#mobile-button-row:has(#mobile-start-capture):not(:has(#stop-capture1)) #mobile-start-capture {
+  flex: 1;   /* occupy full width only when alone */
+  transition: flex-basis 0.4s ease, flex-grow 0.4s ease;
+}
+
+/* When Stop exists: keep Start fixed, Stop flexes */
+#mobile-start-capture {
+  flex: 0 0 160px;   /* fixed width, doesn’t grow */
+  font-size: 0.7rem;
+}
+
+#stop-capture1 {
+  flex: 1;           /* Stop button takes remaining space */
+  font-size: 0.7rem;
+  transition: flex-basis 0.4s ease, flex-grow 0.4s ease;
+}
+
+.desktop-recommended-overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-height: 40%;
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.2);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  overflow-y: auto;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: 0;
+  z-index: 9998;
+}
+
+.desktop-recommended-overlay.open {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.overlay-toggle-btn {
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  z-index: 9999;
+  background: #fff;
+  border: 1px solid #9C2627;
+  border-radius: 20px;
+  padding: 8px 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+
+
+#mobile-thumb-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 2147483647; /* above overlays */
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* center children horizontally */
+  gap: 8px;
+  pointer-events: auto;
+  background: rgba(255,255,255,0.7);
+  padding: 10px;
+  border-radius: 6px;
+  width: 120px;
+}
+
+#thumb-scroll-wrapper {
+  max-height: 300px;       /* ✅ cap height */
+  overflow-y: auto;        /* ✅ enable scrolling */
+  width: 100%;             /* ✅ take full width of container */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+#mobile-thumb-container h6 {
+  width: 100%;
+  text-align: center;    /* center text inside heading */
+  margin: 0;             /* remove default margins */
+  font-size: 0.8rem;
+}
+
+#mobile-thumb-container span {
+  width: 100%;
+  text-align: center;    /* center text inside heading */
+  margin: 0;             /* remove default margins */
+  font-size: 0.5rem;
+}
+
+#mobile-thumb-container .thumb-wrapper {
+  position: relative;
+  display: flex;              /* stack children vertically */
+  flex-direction: column;     /* vertical layout */
+  align-items: center;        /* center horizontally */
+  gap: 6px;
+}
+.thumb-image-wrapper {
+  position: relative;       /* keep delete button overlayed on image */
+  display: inline-block;
+}
+
+.thumb-image-wrapper img {
+  display: block;
+  max-width: 100px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.thumb-image-wrapper .delete-thumb {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 0 6px 0 6px;
+  padding: 2px 6px;
+}
+
+.thumb-wrapper {
+  opacity: 0;
+  transform: translateY(10px) scale(0.95); /* start slightly lower and smaller */
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.thumb-wrapper.show {
+  opacity: 1;
+  transform: translateY(0) scale(1); /* slide up into place */
+}
+
+.thumb-wrapper.fade-out {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.9); /* slide upward while fading out */
+}
+
+.analyze-btn {
+  display: block;           /* force block layout */
+  margin: 0 auto;           /* center horizontally */
+  max-width: 100px;         /* optional: limit width */
+  font-size: 0.5rem;
+}
+
+
+#browser-camera, #camera-overlay-canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#camera-overlay-canvas { z-index: 10; }
+#browser-camera { z-index: 5; }
+
+#recommended-overlay {
+  position: absolute;
+  bottom: 70px;
+  left: 0;
+  right: 0;
+  margin: 0 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 8px;
+  background: rgba(255,255,255,0.6);
+  padding: 6px 10px;
+  border-radius: 8px;
+  max-width: 100%;
+  overflow-x: auto;
+  z-index: 10000;
+
+  /* hidden state */
+  opacity: 0;
+  transform: translateY(30px);
+  pointer-events: none;
+}
+
+#recommended-overlay.open {
+  flex-direction: column;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  animation: floatUp 0.4s ease forwards;
+}
+
+#recommended-overlay.closing {
+  animation: floatDown 0.4s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatDown {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(30px); }
+}
+
+.instructions-overlay {
+  position: absolute;
+  top: 10px;
+  left: 18px;
+  right: 10px;              /* stretch across container */
+  margin: 0 auto;
+  background: rgba(255,255,255,0.9);
+  border-radius: 8px;
+  padding: 12px;
+  z-index: 10001;
+
+  /* responsive sizing */
+  width: auto;
+  max-width: 70%;           /* fit within container width */
+  max-height: 80vh;         /* limit height to 60% of viewport */
+  overflow-y: auto;         /* scroll internally if content too tall */
+
+  /* hidden state */
+  opacity: 0;
+  transform: translateX(-40px);
+  pointer-events: none;
+}
+
+/* Responsive typography */
+.instructions-overlay h4 {
+  font-size: 1.2rem;
+}
+
+.instructions-overlay p {
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.instructions-overlay.open {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  animation: floatRight 0.4s ease forwards;
+}
+
+.instructions-overlay.closing {
+  animation: floatLeft 0.4s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes floatRight {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes floatLeft {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(-40px); }
+}
+
+.instructions-toggle-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10002;          /* above overlays */
+  display: flex;
+  flex-direction: column;  /* stack icon + label vertically */
+  align-items: center;
+  justify-content: center;
+  gap: 4px;                /* spacing between icon and text */
+  background: rgba(255,255,255,0.9);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 8px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: #9C2627;
+}
+
+.instructions-toggle-btn i {
+  font-size: 1.2rem;       /* larger icon */
+}
+
+.instructions-toggle-btn .toggle-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+
+
+.recommended-overlay .frame-card {
+  flex: 0 0 auto;
+  width: 110px;                 /* compact width */
+  height: 190px;                /* equal height */
+  background: rgba(255,255,255,0.8);
+  border-radius: 6px;
+  padding: 4px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.65rem;           /* smaller base font size */
+  line-height: 1.2;
+}
+
+.recommended-overlay .frame-card img {
+  width: 100%;
+  height: 80px;                 /* fixed image height */
+  object-fit: contain;
+  border-radius: 4px;
+  margin-bottom: 3px;
+}
+
+.recommended-overlay .frame-card .frame-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-size: 0.6rem;            /* even smaller for details */
+  overflow-wrap: break-word;    /* wrap long text */
+}
+
+.recommended-overlay .frame-card strong {
+  font-size: 0.65rem;           /* brand slightly larger */
+  font-weight: 600;
+}
+
+.recommended-overlay .frame-card small,
+.recommended-overlay .frame-card span {
+  font-size: 0.55rem;           /* shrink supporting text */
+  display: block;
+  line-height: 0.5;
+}
+
+/* Toggle button: bottom-left corner, always shows label */
+.overlay-toggle-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 12px;   /* ⬅️ keep at left corner */
+  background: rgba(255,255,255,0.9);
+  border: none;
+  border-radius: 5px;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  color: #9C2627;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  z-index: 10001; /* higher than capture */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.overlay-toggle-btn i {
+  font-size: 0.9rem;
+}
+
+.toggle-label {
+  font-weight: 500;
+  color: #333;
+}
+
+
+/* Buttons row: horizontal, centered, above cards */
+.shape-buttons-row {
+  display: flex;
+  flex-direction: row;   /* horizontal */
+  overflow-x: auto;
+  justify-content: flex-start; /* align cards from left */
+  gap: 8px;
+  margin-bottom: 5px;   /* space above cards */
+}
+
+.shape-buttons-row .shape-btn {
+  flex: 0 0 auto;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  height: 20%;
+  width: 30%;
+}
+
+.shape-buttons-row .shape-btn.active {
+  background: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+/* Frame cards row: horizontal scroll */
+.overlay-frame-cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 6px;
+  max-height: 200px; /* ensure visible height */
+}
+
+.capture-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+}
+
+
+
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .capture-btn {
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;        /* full width on small screens */
+    border-radius: 8px;
+  }
+
+  .overlay-toggle-btn {
+    bottom: 80px;      /* move up so it doesn’t overlap capture */
+    left: 12px;
+    font-size: 0.7rem;
+    padding: 5px 10px;
+  }
+}
+
+
+/* ================================
+   Responsive Styles
+   ================================ */
+@media (max-width: 768px) {
+  .condition-title {
+    font-size: 1.2rem;
+  }
+
+  .recommend-row {
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .badge-material,
+  .badge-frame {
+    width: 80%;
+    justify-content: center;
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+
+  .recommend-description {
+    font-size: 0.9rem;
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .condition-title {
+    font-size: 1.1rem;
+  }
+
+  .badge-material,
+  .badge-frame {
+    width: 90%;
+    font-size: 0.85rem;
+    padding: 5px 10px;
+  }
+
+  .recommend-description {
+    font-size: 0.85rem;
+    padding: 8px 10px;
+  }
+}
+
+
+
+/* 🔹 Responsive */
+
+/* Disable equal height on tablet & mobile */
+@media (max-width: 992px) {
+    .page1-row {
+         display: block;
+    }
+    .page1-left .card,
+         .page1-right .card {
+         height: auto;
+    }
+
+   #start-capture {
+         display: none !important;
+   }
+
+   .page-2-camera-card {
+         display: none !important;
+   }
+}
+
+@media (max-width: 768px) {
+   .header {
+        flex-direction: row; /* stay in a row */
+        align-items: center;
+        justify-content: space-between; /* logo left, user info right */
+        text-align: left;
+        padding: 12px 18px;
+   }
+
+   .header-content {
+        flex: 1;
+        justify-content: flex-start;
+   }
+
+   .user-info {
+        flex-shrink: 0;
+        justify-content: flex-end; /* move to right side */
+   }
+
+   .header-content img {
+        height: 65px;
+   }
+
+   .header-content h3 {
+        font-size: 1.25rem;
+   }
+
+   .select-row {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 10px;
+   }
+
+   #patient-status {
+        width: 100%;
+        text-align: left !important;
+        font-size: 0.9rem;
+        margin-top: -5px;
+   }
+
+   .form-group label {
+        font-size: 1rem !important;
+   }
+
+   #frame-shape-filter button {
+        flex: 1 1 45%; /* 2 per row */
+        font-size: 0.85rem;
+        padding: 8px 6px;
+   }
+
+   /* Recommended frames grid on mobile */
+   #recommended-frames-container {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        max-height: 350px;
+   }
+
+   #patient-select {
+        width: 100% !important;
+        max-width: 100% !important;
+   }
+}
+
+@media (max-width: 480px) {
+    /* Header: full width, no outer margin */
+      .header {
+          width: 100%;
+          margin: 0;                 /* remove side margins */
+          border-radius: 0;          /* optional: flush edges */
+          box-sizing: border-box;    /* include padding in width */
+          padding: 10px 15px;
+          margin-bottom: 25px;       /* ⬅️ space below header */
+      }
+
+      /* Cards: match header width */
+      .card,
+      .instructions-card,
+      .select-patient-card,
+      .page-2-camera-card .card {
+          width: 100%;
+          max-width: 100%;
+          margin: 0;                 /* remove side margins */
+          margin-bottom: 15px;       /* keep vertical spacing */
+          box-sizing: border-box;
+        }
+
+
+    .header-content img {
+        height: 55px;
+    }
+
+    .header-content h3 {
+        font-size: 0.8rem;
+    }
+
+    .user-info .img-profile {
+        width: 35px;
+        height: 35px;
+    }
+
+    .user-info span {
+        font-size: 0.85rem;
+    }
+
+    .instructions-card {
+        font-size: 0.85rem;
+    }
+
+    .select-patient-card {
+        font-size: 0.85rem;
+    }
+
+    .form-group label {
+        font-size: 0.9rem !important;
+    }
+
+    #patient-status {
+        font-size: 0.8rem !important;
+        padding: 8px 10px;
+        width: 50%;
+    }
+
+    #frame-shape-filter button {
+        flex: 1 1 100%;  /* 1 button per row */
+    }
+
+    #recommended-frames-container {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        max-height: 300px;
+    }
+
+    #btn-next {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    #btn-next i {
+        font-size: 14px;
+    }
+
+    .camera-feed {
+        max-height: 260px;
+    }
+
+    .camera-overlay-content {
+        width: 92%;
+        padding: 16px;
+    }
+
+    .overlay-close {
+       font-size: 1.5rem;
+    }
+
+    #overlayStartCapture,
+    #overlayCloseBottom {
+       font-size: 0.9rem;
+       padding: 10px;
+    }
+
+    #patient-status {
+    display: flex;              /* use flexbox */
+    justify-content: center;    /* center horizontally */
+    align-items: center;        /* center vertically */
+    text-align: center;         /* center text inside */
+    width: 100%;                /* stretch across card */
+    margin: 15px 0;             /* spacing above/below */
+    min-height: 80px;           /* give it height so centering is visible */
+  }
+}
